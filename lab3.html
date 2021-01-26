@@ -1,0 +1,45 @@
+<!---
+
+https://api.nasa.gov/planetary/apod?api_key=NrjoD8JjeTMnHEH2fZeQnsTUtHsbyJodtvuESNED
+--->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title> Lab 3 </title>
+
+    
+
+  </head>
+  
+  <body>
+
+    <script>
+        fetch("https://api.nasa.gov/planetary/apod?api_key=NrjoD8JjeTMnHEH2fZeQnsTUtHsbyJodtvuESNED")
+        .then( (response) => {
+            return response.json()
+        }).then ( (json) => {
+            
+            let h1 = document.createElement("h1");
+            document.body.appendChild(h1);
+            document.body.querySelector("h1").append(json.title);
+
+            let image = document.createElement("img");
+            document.body.appendChild(image);
+            document.body.querySelector("img").src = json.hdurl;
+            
+            let para = document.createElement("p");
+            document.body.appendChild(para);
+            document.body.querySelector("p").append(json.explanation);
+
+        });
+
+
+        
+    </script>
+   
+
+  </body>
+</html>
