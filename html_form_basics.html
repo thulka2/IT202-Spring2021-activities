@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+  </head>
+  <body>
+    <h1>Form Basics</h1>
+
+    <label for="form1"> Form1 </label> 
+    <form id="form1" name="form1">
+     
+      <br>
+     
+      <label for="text1"> Text1 </label>
+      <input type="text" id="text1" name="text1"> 
+      <br>
+      <input type="radio" id ="red" name="radio1" value="red" checked>
+      <label for="red"> red </label>
+      <input type="radio" id ="green" name="radio1" value="green">
+      <label for="green"> green </label>
+      <input type="radio" id ="blue" name="radio1" value="blue">
+      <label for="blue"> blue </label>
+      <br>
+      <br>
+      <label for="select1">Select1</label>
+      <select name="select1" id="select1">
+        <option value=""></option>
+        <option value="Mon">Mon</option>
+        <option value="Wed">Wed</option>
+        <option value="Fri">Fri</option>
+
+      </select>
+      <br>
+      <label for="textarea1">Textarea1</label>
+      <br>
+      <textarea name="textarea1" id="textarea1" cols=60 rows = 4> Please provide additional feedback</textarea>
+
+    </form>
+
+
+    <p id="uptonSinclairQuote">
+    It is difficult to get a man to understand something, when his salary depends upon his not understanding it! -- Upton Sinclair
+    </p>
+
+
+    <script>
+
+        //1
+        document.body.querySelector('#text1').value = "Tomasz Hulka"
+
+        //2
+        document.body.querySelector('input[value="green"]').checked = true
+
+        //3 
+        document.body.querySelector('#textarea1').innerHTML = document.body.querySelector('p').innerHTML
+
+        //4
+        let sel1 = document.body.querySelector('#select1')
+        sel1.addEventListener("change", () => console.log(document.body.querySelector('option:checked').value))
+
+
+    </script>
+  </body>
+</html>
