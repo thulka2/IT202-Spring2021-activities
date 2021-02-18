@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+     
+
+      function drawChart() {
+
+        let data = new google.visualization.DataTable();
+
+        // Declare columns
+        data.addColumn('string', 'School type');
+        data.addColumn('number', 'count');
+
+
+        let data2 = new google.visualization.DataTable();
+        data2.addColumn('date', 'Date');
+        data2.addColumn('number', 'Vaccine count');
+        
+        fetch("https://data.cityofchicago.org/resource/dw27-rash.json?$SELECT=school_type,count(school_type)&$GROUP=school_type")
+        .then( (response) => { return response.json()})
+        .then( (schools) => {
+
+
+            schools.forEach( (entry) => {
+                data.addRow([entry.school_type, parseInt(entry.count_school_type)])
+            });
+
+            let options = {
+                title: 'Counts of Chicago School Types'
+             };
+
+            let chart = new google.visualization.PieChart(document.querySelector('#piechart'));
+
+           
+            chart.draw(data, options);
+
+        })
+
+
+        fetch("https://data.cityofchicago.org/resource/553k-3xzc.json?$SELECT=date,sum(total_doses_cumulative)&$GROUP=date&$ORDER=date")
+        .then( (response) => { return response.json()})
+        .then( (dates) => {
+
+
+          dates.forEach( (entry) => {
+            //console.log(entry.date.slice(0, 4) + " " + entry.date.slice(5, 7) + " " + entry.date.slice(8, 10));
+            let tmpDate = new Date(parseInt(entry.date.slice(0, 4)), parseInt(entry.date.slice(5, 7)), parseInt(entry.date.slice(8, 10)) )
+            //console.log(tmpDate.getUTCDate());
+            data2.addRow([tmpDate, parseInt(entry.sum_total_doses_cumulative)])
+          })
+
+          var options = {
+          title: 'Total cumulative COVID19 vaccinations in Chicago, by date',
+          legend: { position: 'bottom' },
+          hAxis: { title: 'Date', format:'MMM d, y'},
+          vAxis: { title: 'Total vaccinations'}
+
+          };
+
+          var chart = new google.visualization.LineChart(document.querySelector('#curve_chart'));
+
+          chart.draw(data2, options);
+
+        })
+
+       
+
+        
+
+        
+
+       
+      }
+    </script>
+  </head>
+  <body>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+  </body>
+</html>
+
