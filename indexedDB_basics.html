@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+      <!-- Include Dexie -->
+      <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+
+      <script>
+          //
+          // Define your database
+          //
+          var db = new Dexie("basic_database");
+          db.version(1).stores({
+              schools: 'long_name,student_attainment_rating, student_attendance_year_1'
+          });
+
+          db.schools.clear();
+          fetch("https://data.cityofchicago.org/resource/dw27-rash.json")
+          .then( (response) => {return response.json()})
+          .then ( (reports) => {
+
+
+            reports.forEach( (item) => {
+                db.schools.put({long_name: item.long_name, student_attainment_rating: item.student_attainment_rating, 
+                student_attendance_year_1: parseFloat(item.student_attendance_year_1), address: item.address, school_type: item.school_type,
+                 website: item.website
+                })
+
+            
+            })
+
+            let div1 = document.createElement('div')
+            let div2 = document.createElement('div')
+            let div3 = document.createElement('div')
+            let div4 = document.createElement('div')
+            let div5 = document.createElement('div')
+
+
+            // 1 - 5 = a - e from activity doc 
+            db.schools.count().then( (resp) => {  div1.append("Count all: " + resp)})
+
+            db.schools.where("student_attainment_rating").equals("AVERAGE").count().then( (resp) => {  div2.append("Count 'AVERAGE': " + resp)})
+            
+            div3.innerHTML += "<br/>"
+            div3.append("Schools with attendance >= 98%: ")
+            div3.innerHTML += "<br/>"
+            db.schools.where("student_attendance_year_1").aboveOrEqual(98.0).each( (resp) => {  
+                div3.append(resp.long_name);
+                div3.innerHTML += "<br/>";
+            })
+
+            div4.innerHTML += "<br/>"
+            div4.append("Schools starting with letter 'K': ")
+            div4.innerHTML += "<br/>"
+            db.schools.where("long_name").startsWith("K").each( (resp) => {  
+                div4.append(resp.long_name);
+                div4.innerHTML += "<br/>";
+            })
+
+
+            db.schools.filter( (resp) => {
+                return resp.school_type == "Charter";
+            }).delete()
+            
+            div5.innerHTML += "<br/>"
+            db.schools.count().then( (resp) => {  div5.append("Count after deleting Charter schools: " + resp)})
+
+            
+
+
+            document.body.appendChild(div1);
+            document.body.appendChild(div2);
+            document.body.appendChild(div3);
+            document.body.appendChild(div4);
+            document.body.appendChild(div5);
+
+
+          })
+          
+          
+        
+      </script>
+  </head>
+  <body>
+      
+  </body>
+</html>
