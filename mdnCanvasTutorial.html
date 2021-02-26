@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='utf-8'/>
+  <title>MDN Canvas Tutorial</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap" rel="stylesheet"> 
+  <style>
+      canvas {
+        
+        position: absolute;
+        background-color: #5ab437;
+        
+        }    
+    body {
+        margin: 0;
+        padding: 0;
+    }      
+
+  </style>
+  </head>
+
+  
+  <body>
+
+    <canvas id="canvas" width="500" height="500"> </canvas>
+    <script> 
+
+        
+
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            let canvas = document.querySelector("#canvas");
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+            let ctx = canvas.getContext("2d");
+
+
+
+            ctx.beginPath();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'blue';  
+            ctx.shadowOffsetX = 25;
+            ctx.shadowOffsetY = 20;
+            ctx.shadowBlur = 2;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(25, 25, 100, 150);
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.fillStyle = 'red';
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.arc(375, 75, 50, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.closePath();
+
+
+            ctx.beginPath();
+            ctx.font = '40px Akaya Telivigala';
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.strokeStyle = "pink";
+            ctx.strokeText('Tomasz Hulka', 20, 400);
+            ctx.closePath();
+
+
+            let img = new Image();   // Create new img element
+            img.onload = function() {
+                ctx.drawImage(img, 400, 400, 100, 100);
+                ctx.drawImage(img, 300, 300, 100, 100);
+                ctx.drawImage(img, 200, 200, 100, 100);
+                ctx.drawImage(img, 100, 100, 100, 100);
+                ctx.drawImage(img, 0, 0, 100, 100);
+
+
+            }
+            img.src = 'https://cfunity-school-logos.nfhsnetwork.com/v1/lane-tech-college-prep-chicago-il_a5092870f6.png';
+
+          
+        }, false);
+
+       
+            
+    
+    </script>
+  </body>
+</html>
