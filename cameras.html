@@ -57,6 +57,10 @@
 		footer a {
 			color: #fff;
 		}
+
+        #controls {
+            display:inline-block;
+        }
 	</style>
 
 </head>
@@ -68,9 +72,11 @@
 	</header>
 
 	<main>
-		<div class="controls" id="controls">
+		<div class="controls" >
 			<button id="button">Get camera</button>
-      
+            <div id="controls">
+
+            </div>
     </div>
 
     <video id="video" autoplay playsinline></video>
@@ -126,6 +132,7 @@
     });
 
     function gotDevices(mediaDevices) {
+        cameraButtons.innerHTML = '';
         let count = 1;
         mediaDevices.forEach(mediaDevice => {
             if (mediaDevice.kind === 'videoinput') {
@@ -145,7 +152,7 @@
     
 
    
-    //navigator.mediaDevices.enumerateDevices().then(gotDevices);
+    navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
   </script>
 </body>
