@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Location Aware Map Activity</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 60%;
+        width: 60%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <div id="map"></div>
+    <h1> Geolocation coordinates: </h1>
+    <div id="coordinates">
+
+    </div>
+    <script>
+        let map;
+        let list = document.querySelector('#coordinates');
+  
+        function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: {lat: 41.869, lng: -87.649},
+            zoom: 17,
+          });
+        }
+  
+        function success(position) {
+           //doSomething(position.coords.latitude, position.coords.longitude);
+           console.log("success");
+           const pos = {lat: position.coords.latitude, lng: position.coords.longitude};
+           var d = new Date();
+           const entry = document.createElement('div');
+           entry.innerHTML = d.toUTCString() + '</br>' + 'Lat: ' + position.coords.latitude + ', Lng: ' + position.coords.longitude + '</br>'+ '</br>';
+           list.prepend(entry);
+           map.setCenter(pos); 
+           const locationCircle = new google.maps.Circle({
+              strokeColor: "#FF0000",
+              strokeOpacity: 0,
+              strokeWeight: 2,
+              fillColor: "#FF0000",
+              fillOpacity: 1,
+              map,
+              center: pos,
+              radius: 3,
+          });
+  
+        }
+  
+          function error() {
+          alert('Sorry, no position available.');
+          }
+  
+          const options = {
+          enableHighAccuracy: true,
+          maximumAge: 30000,
+          timeout: 27000
+          };
+  
+          const watchID = navigator.geolocation.watchPosition(success, error, options);
+      </script>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVIWSXUb-hanWRhU3VHaMOTardJLCqoiI&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+  </body>
+</html>
