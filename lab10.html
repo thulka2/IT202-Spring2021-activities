@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Lab 10</title>
+    <link rel="manifest" href="manifest.json">
+  </head>
+
+  <body>
+
+    
+        <textarea id="story" name="story"
+        rows="10" cols="40">
+        </textarea>
+    </br>
+        <label for="language">Language</label>
+      <select name="language" id="language">
+          <option></option>
+      </select>
+      
+    
+
+   <button id="speak" disabled>Speak</button>
+
+   
+    <script>
+    let synth = window.speechSynthesis;
+    let select = document.querySelector('select');
+    let voices;
+    let langToPlay = 0; 
+    document.addEventListener('DOMContentLoaded', function() {
+        voices = synth.getVoices();
+        //console.log(voices.length);
+        voices.forEach((voice, i) => {
+            //console.log(voice);
+            let tmp = document.createElement('option');
+            tmp.textContent = `${i}. ${voice.lang}`;
+            tmp.setAttribute('value', String(i));
+            select.append(tmp);
+
+        });
+        
+    }, false);
+
+    select.addEventListener('change', (event) => {
+        document.querySelector('#speak').disabled = false;
+        langToPlay = event.target.value;
+        //console.log(parseInt(langToPlay));
+        
+    })
+
+    document.querySelector('#speak').addEventListener('click', (event) => {
+        let speech = new SpeechSynthesisUtterance(document.querySelector('#story').value);
+        speech.voice = voices[langToPlay];
+        speech.lang = voices[langToPlay].lang;
+        synth.speak(speech);
+    })
+    
+
+    </script>
+
+   
+  </body>
+</html>
