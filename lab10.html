@@ -29,19 +29,32 @@
     let select = document.querySelector('select');
     let voices;
     let langToPlay = 0; 
-    document.addEventListener('DOMContentLoaded', function() {
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     voices = synth.getVoices();
+    //     //console.log(voices.length);
+    //     voices.forEach((voice, i) => {
+    //         //console.log(voice);
+    //         let tmp = document.createElement('option');
+    //         tmp.textContent = `${i}. ${voice.lang}`;
+    //         tmp.setAttribute('value', String(i));
+    //         select.append(tmp);
+
+    //     });
+        
+    // }, false);
+
+    synth.onvoiceschanged = function () {
         voices = synth.getVoices();
         //console.log(voices.length);
         voices.forEach((voice, i) => {
-            //console.log(voice);
-            let tmp = document.createElement('option');
-            tmp.textContent = `${i}. ${voice.lang}`;
-            tmp.setAttribute('value', String(i));
-            select.append(tmp);
+          //console.log(voice);
+          let tmp = document.createElement('option');
+          tmp.textContent = `${i}. ${voice.lang}`;
+          tmp.setAttribute('value', String(i));
+          select.append(tmp);
 
         });
-        
-    }, false);
+      }
 
     select.addEventListener('change', (event) => {
         document.querySelector('#speak').disabled = false;
