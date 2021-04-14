@@ -14,19 +14,35 @@
             enable: true
         },
     };
-    OneSignal.push(function () {
-        OneSignal.SERVICE_WORKER_PARAM = { scope: './push/' };
-        OneSignal.SERVICE_WORKER_PATH = './push/OneSignalSDKWorker.js'
-        OneSignal.SERVICE_WORKER_UPDATER_PATH = './push/OneSignalSDKUpdaterWorker.js'
-        OneSignal.init(initConfig);
-    });
-</script>
+    // OneSignal.push(function () {
+    //     OneSignal.SERVICE_WORKER_PARAM = { scope: './push/' };
+    //     OneSignal.SERVICE_WORKER_PATH = './push/OneSignalSDKWorker.js'
+    //     OneSignal.SERVICE_WORKER_UPDATER_PATH = './push/OneSignalSDKUpdaterWorker.js'
+    //     OneSignal.init(initConfig);
+    // });
+
+    </script>
 
 </head>
 
 <body>
     <h1> Welcome to Push Activity </h1>
 
+    <script>
+
+
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('./push/sw.js').then((registration) => {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, (err) => {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    </script>
 </body>
 
 </html>
