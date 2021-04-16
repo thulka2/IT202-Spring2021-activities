@@ -14,12 +14,12 @@
             enable: true
         },
     };
-    // OneSignal.push(function () {
-    //     OneSignal.SERVICE_WORKER_PARAM = { scope: './push/' };
-    //     OneSignal.SERVICE_WORKER_PATH = './push/OneSignalSDKWorker.js'
-    //     OneSignal.SERVICE_WORKER_UPDATER_PATH = './push/OneSignalSDKUpdaterWorker.js'
-    //     OneSignal.init(initConfig);
-    // });
+    OneSignal.push(function () {
+        OneSignal.SERVICE_WORKER_PARAM = { scope: './push/' };
+        OneSignal.SERVICE_WORKER_PATH = './push/OneSignalSDKWorker.js'
+        OneSignal.SERVICE_WORKER_UPDATER_PATH = './push/OneSignalSDKUpdaterWorker.js'
+        OneSignal.init(initConfig);
+    });
 
     </script>
 
